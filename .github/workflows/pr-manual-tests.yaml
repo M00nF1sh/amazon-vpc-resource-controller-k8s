@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CLUSTER_NAME: vpc-rc-ci-test
-      K8S_VERSION: 1.19
+      K8S_VERSION: 1.23
     steps:
       - name: Checkout latest commit in the PR
         uses: actions/checkout@v3
@@ -33,6 +33,11 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: "1.19"
+      - name: Set up tools
+        run: |
+          go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@latest
+          curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+          sudo mv /tmp/eksctl /usr/local/bin/
       - name: Set up AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
