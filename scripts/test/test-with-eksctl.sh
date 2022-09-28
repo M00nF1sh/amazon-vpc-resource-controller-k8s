@@ -265,11 +265,11 @@ trap 'clean_up' EXIT
 kubectl cordon -l kubernetes.io/os=windows
 
 # Install the stable version of VPC CNI
-bash "$SCRIPTS_DIR/install-vpc-cni.sh" "1.11"
+sh "$SCRIPTS_DIR/install-vpc-cni.sh" "1.11"
 
 # Install Cert Manager which is used for generating the
 # certificates for the Webhooks
-bash "$SCRIPTS_DIR/install-cert-manager.sh"
+sh "$SCRIPTS_DIR/install-cert-manager.sh"
 
 # Login to ECR to push the controller image
 ecr_login "$AWS_REGION" "$ECR_URL"
